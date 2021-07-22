@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
+
 import { PieChartCard } from './charts/PieChartCard';
 import { SimpleLineChartCard } from './charts/SimpleLineChartCard';
-
-import { simpleLineChartData } from '../data/simpleLineChartData';
-import { pieChartData } from '../data/pieChartData';
+import { SimpleBarChartCard } from './charts/SimpleBarChartCard';
 
 import '../styles/dashboard.css';
+
+// Data de ejemplo
+import { simpleLineChartData } from '../data/simpleLineChartData';
+import { pieChartData } from '../data/pieChartData';
+import { simpleBarChartData } from '../data/simpleBarChartData';
 
 const Dashboard = () => {
 
@@ -14,7 +18,7 @@ const Dashboard = () => {
     const getData = () => {
         setTimeout(() => {
             setLoading( false ); // Información obtenida
-        }, 1500);
+        }, 1000);
     }
 
     useEffect(() => {
@@ -40,15 +44,35 @@ const Dashboard = () => {
                     data={ simpleLineChartData } 
                     title="Simple Line Chart" 
                     text="With supporting text below as a natural lead-in to additional content."
+                    footer="Text in the footer"
                     width={ 500 }
                     height={ 300 }
+                    onClick={ () => alert( 'Click' ) }
                 />
                 <PieChartCard 
                     data={ pieChartData } 
                     title="Pie Chart" 
+                    text="With supporting text below as a natural lead-in to additional content."
                     footer="Text in the footer"
+                    width={ 500 }
+                    height={ 300 }
+                    outerRadius={ 100 }
+                    onClick={ () => alert( 'Click' ) }
                 />
+                <SimpleBarChartCard 
+                    data={ simpleBarChartData } 
+                    title="Simple Bar Chart" 
+                    text="With supporting text below as a natural lead-in to additional content."
+                    footer="Text in the footer"
+                    width={ 1060 }
+                    height={ 400 }
+                    outerRadius={ 100 }
+                    onClick={ () => alert( 'Click' ) }
+                />
+                <br />
             </div>
+            <br />
+            <br />
         </div>
     )
 }

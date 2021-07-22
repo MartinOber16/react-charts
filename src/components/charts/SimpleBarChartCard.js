@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 import '../../styles/cards.css';
 import { COLORS } from '../../utils/colors';
@@ -9,37 +9,19 @@ import { COLORS } from '../../utils/colors';
 //         name: 'Page A',
 //         uv: 4000,
 //         pv: 2400,
-//         amt: 2100,
+//         amt: 2400,
 //     },
 // ]
 
-const countValuesJSONObject = ( data ) => {
-
-    let keys = [];
-    data.map( obj => {
-        for( let key in obj ) {
-            if(!keys.includes(key)) {
-                keys.push(key);
-            }
-        }
-        return true;
-    })
-
-    return keys;
-}
-
-export const SimpleLineChartCard = ({ title = '', text = '', footer ='', data = [], width = 500,  height = 300, onClick }) => {
-
-    const lines = countValuesJSONObject(data);
-
+export const SimpleBarChartCard = ({ title = '', text = '', footer ='', data = [], width = 500,  height = 300, onClick }) => {
     return (
-        <div className="chartCard" >
+        <div className="chartCard"  >
             <div className="card" onClick={ onClick } >
                 <div className="card-body">
                     <h5 className="card-title">{ title }</h5>
                     <p className="card-text">{ text }</p>
                     <br />
-                    <LineChart
+                    <BarChart
                         width={ width }
                         height={ height }
                         data={ data }
@@ -49,21 +31,16 @@ export const SimpleLineChartCard = ({ title = '', text = '', footer ='', data = 
                             left: 20,
                             bottom: 5,
                         }}
-                    >
+                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-
-                        {
-                            lines.map( (line, index) => 
-                                (line !== 'name') && 
-                                    <Line type="monotone" dataKey={ line } stroke={ COLORS[index] } key={ line } /> 
-                            )
-                        }
-
-                    </LineChart>
+                        <Bar dataKey="pv" fill={ COLORS[0]} />
+                        <Bar dataKey="uv" fill={ COLORS[1]} />
+                        <Bar dataKey="amt" fill={ COLORS[2]} />
+                    </BarChart>
                     <br />
                     { (footer) && <p className="card-footer">{ footer }</p> }
                 </div>
