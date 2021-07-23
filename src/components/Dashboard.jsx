@@ -4,8 +4,6 @@ import { PieChartCard } from './charts/PieChartCard';
 import { SimpleLineChartCard } from './charts/SimpleLineChartCard';
 import { SimpleBarChartCard } from './charts/SimpleBarChartCard';
 
-import '../styles/dashboard.css';
-
 // Data de ejemplo
 import { simpleLineChartData } from '../data/simpleLineChartData';
 import { pieChartData } from '../data/pieChartData';
@@ -48,6 +46,8 @@ const Dashboard = () => {
                     width={ 500 }
                     height={ 300 }
                     onClick={ () => alert( 'Click' ) }
+                    legend = { true }
+                    tooltip = { true }
                 />
                 <PieChartCard 
                     data={ pieChartData } 
@@ -58,6 +58,9 @@ const Dashboard = () => {
                     height={ 300 }
                     outerRadius={ 100 }
                     onClick={ () => alert( 'Click' ) }
+                    labelLine = { true } 
+                    legend = { true }
+                    tooltip = { true }
                 />
                 <SimpleBarChartCard 
                     data={ simpleBarChartData } 

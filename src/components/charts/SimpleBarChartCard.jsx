@@ -18,7 +18,7 @@ export const SimpleBarChartCard = ({ title = '', text = '', footer ='', data = [
         <div className="chartCard"  >
             <div className="card" onClick={ onClick } >
                 <div className="card-body">
-                    <h5 className="card-title">{ title }</h5>
+                    <h4 className="card-title">{ title }</h4>
                     <p className="card-text">{ text }</p>
                     <br />
                     <BarChart
