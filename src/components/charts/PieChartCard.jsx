@@ -34,14 +34,14 @@ export const PieChartCard = ({
         width = 500,  
         height = 400, 
         outerRadius = 80, 
-        onClick,
         labelLine = false, 
         legend = false,
-        tooltip = false
+        tooltip = false,
+        getListData = () => { },
     }) => {
 
     return (
-        <DivPieChartCard className="card" onClick={ onClick } >
+        <DivPieChartCard className="card" >
             <div className="card-body">
                 <h4 className="card-title">{ title }</h4>
                 <p className="card-text">{ text }</p>
@@ -66,6 +66,10 @@ export const PieChartCard = ({
                                 <Cell 
                                     key={`cell-${index}`} 
                                     fill={COLORS[index % COLORS.length]} 
+                                    onClick={ async () => {
+                                        const data = await getListData( 30, entry.id );
+                                        console.log(data);
+                                    } }
                                 />
                             ))
                         }

@@ -6,17 +6,52 @@ import { SimpleBarChartCard } from './charts/SimpleBarChartCard';
 
 // Data de ejemplo
 import { simpleLineChartData } from '../data/simpleLineChartData';
-import { pieChartData } from '../data/pieChartData';
 import { simpleBarChartData } from '../data/simpleBarChartData';
+import { fetchSinToken } from '../helpers/fetch';
+
+//import { pieChartData } from '../data/pieChartData';
+const getPieChartData = async ( dias = 30 ) => {
+    const resp = await fetchSinToken( `charts/pendientesPorTipoTramite?dias=${ dias }` );
+    const body = await resp.json();
+
+    if( body.ok ) {
+        const data = body.obj.map( (o, i) => ({
+            id: i+1, //TODO: aca deberia ser entry.id pero hay que traerlo del backend y meterlo en la data
+            name: o.tipoTramite,
+            value: o.count,
+        }))
+
+        return data;
+    } else {
+        console.log( body.msg );
+        return [];
+    }
+}
+
+const getPieChartListData = async ( dias = 30, tipoTramite ) => {
+
+    console.log( { tipoTramite } );
+
+    const resp = await fetchSinToken( `listados/pendientesTipoTramiteUltimosDias?dias=${ dias }&tipoTramite=${ tipoTramite }` );
+    const body = await resp.json();
+
+    if( body.ok ) {
+        return body.obj;
+    } else {
+        console.log( body.msg );
+        return [];
+    }
+}
 
 const Dashboard = () => {
 
     const [loading, setLoading] = useState( true );
+    const [pieChartData, setPieChartData] = useState([]);
 
-    const getData = () => {
-        setTimeout(() => {
-            setLoading( false ); // Información obtenida
-        }, 1000);
+    const getData = async () => {
+        const pcd = await getPieChartData();
+        setPieChartData( pcd );
+        setLoading( false );
     }
 
     useEffect(() => {
@@ -49,19 +84,21 @@ const Dashboard = () => {
                     legend = { true }
                     tooltip = { true }
                 />
+
                 <PieChartCard 
                     data={ pieChartData } 
                     title="Pie Chart" 
                     text="With supporting text below as a natural lead-in to additional content."
                     footer="Text in the footer"
                     width={ 500 }
-                    height={ 300 }
+                    height={ 500 }
                     outerRadius={ 100 }
-                    onClick={ () => alert( 'Click' ) }
                     labelLine = { true } 
                     legend = { true }
                     tooltip = { true }
+                    getListData = { getPieChartListData }
                 />
+
                 <SimpleBarChartCard 
                     data={ simpleBarChartData } 
                     title="Simple Bar Chart" 
