@@ -11,7 +11,8 @@ import { fetchSinToken } from '../helpers/fetch';
 
 //import { pieChartData } from '../data/pieChartData';
 const getPieChartData = async ( dias = 30 ) => {
-    const resp = await fetchSinToken( `charts/pendientesPorTipoTramite?dias=${ dias }` );
+    const urlChartData = process.env.REACT_APP_API_URLCHARTDATA;
+    const resp = await fetchSinToken( `${ urlChartData }?dias=${ dias }` );
     const body = await resp.json();
 
     if( body.ok ) {
@@ -31,8 +32,8 @@ const getPieChartData = async ( dias = 30 ) => {
 const getPieChartListData = async ( dias = 30, tipoTramite ) => {
 
     console.log( { tipoTramite } );
-
-    const resp = await fetchSinToken( `listados/pendientesTipoTramiteUltimosDias?dias=${ dias }&tipoTramite=${ tipoTramite }` );
+    const urlChartList = process.env.REACT_APP_API_URLCHARTLIST;
+    const resp = await fetchSinToken( `${ urlChartList }?dias=${ dias }&tipoTramite=${ tipoTramite }` );
     const body = await resp.json();
 
     if( body.ok ) {
